@@ -1,6 +1,6 @@
 const surveyQuestions = [
     {
-        text: `**Question 1:**
+        text: `Question 1:
 
 What is your experience in crypto?
 
@@ -12,7 +12,7 @@ What is your experience in crypto?
         ]
     },
     {
-        text: `**Question 2:**
+        text: `Question 2:
 
 How much is your deposit?
 
@@ -25,7 +25,7 @@ How much is your deposit?
         ]
     },
     {
-        text: `**Question 3:**
+        text: `Question 3:
 
 Which product are you interested in?
 
@@ -36,7 +36,7 @@ Which product are you interested in?
         ]
     },
     {
-        text: `**Question 4:**
+        text: `Question 4:
 
 How did you hear about us?
 

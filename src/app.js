@@ -83,7 +83,7 @@ I can:
                 
                 // Добавляем призыв к действию в конце каждого ответа
                 const responseWithCTA = response + '\n\n---\n\nIf you are ready to connect to the bot or want to talk to the curator, fill out the application by answering a few questions. Write + in the chat.';
-                await this.bot.sendMessage(chatId, responseWithCTA, { parse_mode: 'Markdown' });
+                await this.bot.sendMessage(chatId, responseWithCTA);
             }
         } catch (error) {
             console.error('Ошибка при обработке сообщения:', error);
@@ -200,9 +200,7 @@ Guidelines:
         
         try {
             // Отправляем данные в канал поддержки
-            await this.bot.sendMessage(process.env.SUPPORT_CHANNEL_ID, connectionRequest, {
-                parse_mode: 'Markdown'
-            });
+            await this.bot.sendMessage(process.env.SUPPORT_CHANNEL_ID, connectionRequest);
 
             // Уведомляем пользователя
             await this.bot.sendMessage(chatId, 
