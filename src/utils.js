@@ -4,9 +4,15 @@ function formatConnectionRequest(answers, chatId, userInfo = null) {
     // Если есть информация о пользователе, показываем имя и ссылку
     if (userInfo && (userInfo.first_name || userInfo.username)) {
         const displayName = userInfo.first_name || userInfo.username;
-        formattedRequest += `🌐 Link: [${displayName}](tg://user?id=${chatId})\n`;
+        // Используем username если есть, иначе user ID
+        if (userInfo.username) {
+            formattedRequest += `🌐 Link: [@${userInfo.username}](https://t.me/${userInfo.username})\n`;
+        } else {
+            const userId = userInfo.id || chatId;
+            formattedRequest += `🌐 Link: [${displayName}](https://t.me/user?id=${userId})\n`;
+        }
     } else {
-        formattedRequest += `🌐 Link: [User Profile](tg://user?id=${chatId})\n`;
+        formattedRequest += `🌐 Link: [User Profile](https://t.me/user?id=${chatId})\n`;
     }
 
     // Добавляем ответы на вопросы в простом формате

@@ -136,6 +136,14 @@ When discussing returns or financial matters, always include this disclaimer:
 
     async askCurrentQuestion(chatId) {
         const session = this.userSessions.get(chatId);
+        
+        // Проверяем, существует ли сессия
+        if (!session) {
+            console.log(`Сессия не найдена для chatId: ${chatId}`);
+            await this.bot.sendMessage(chatId, 'Сессия истекла. Пожалуйста, начните заново, написав +');
+            return;
+        }
+
         const question = surveyQuestions[session.currentQuestion];
 
         if (!question) {
@@ -170,7 +178,22 @@ When discussing returns or financial matters, always include this disclaimer:
 
     async processSurveyAnswer(chatId, answerIndex) {
         const session = this.userSessions.get(chatId);
+        
+        // Проверяем, существует ли сессия
+        if (!session) {
+            console.log(`Сессия не найдена для chatId: ${chatId}`);
+            await this.bot.sendMessage(chatId, 'Сессия истекла. Пожалуйста, начните заново, написав +');
+            return;
+        }
+
         const question = surveyQuestions[session.currentQuestion];
+
+        // Проверяем, существует ли вопрос
+        if (!question) {
+            console.log(`Вопрос не найден для индекса: ${session.currentQuestion}`);
+            await this.completeSurvey(chatId);
+            return;
+        }
 
         session.answers[`question_${session.currentQuestion + 1}`] = {
             question: question.text,
@@ -184,6 +207,13 @@ When discussing returns or financial matters, always include this disclaimer:
 
     async completeSurvey(chatId) {
         const session = this.userSessions.get(chatId);
+        
+        // Проверяем, существует ли сессия
+        if (!session) {
+            console.log(`Сессия не найдена для chatId: ${chatId} при завершении опроса`);
+            await this.bot.sendMessage(chatId, 'Сессия истекла. Пожалуйста, начните заново, написав +');
+            return;
+        }
         
         // Получаем информацию о пользователе
         let userInfo = null;
@@ -199,7 +229,9 @@ When discussing returns or financial matters, always include this disclaimer:
         
         try {
             // Отправляем данные в канал поддержки
+            console.log(`Отправляем заявку в канал: ${process.env.SUPPORT_CHANNEL_ID}`);
             await this.bot.sendMessage(process.env.SUPPORT_CHANNEL_ID, connectionRequest);
+            console.log('Заявка успешно отправлена в канал поддержки');
 
             // Уведомляем пользователя
             await this.bot.sendMessage(chatId, 
