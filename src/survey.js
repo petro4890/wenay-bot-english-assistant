@@ -4,7 +4,7 @@ const surveyQuestions = [
 
 What is your experience in crypto?
 
-(select an option and enter the answer number in the line)`,
+(click on one of the options below)`,
         options: [
             "1. Beginner - up to 1 year",
             "2. Intermediate - 1-3 years", 
@@ -16,7 +16,7 @@ What is your experience in crypto?
 
 How much is your deposit?
 
-(select an option and enter the answer number in the line)`,
+(click on one of the options below)`,
         options: [
             "1. Less than $1,200",
             "2. $1,200–$10,000",
@@ -29,7 +29,7 @@ How much is your deposit?
 
 Which product are you interested in?
 
-(select an option and enter the answer number in the line)`,
+(click on one of the options below)`,
         options: [
             "1. Wenay bot 5-15% per month",
             "2. Wenay rebalancer up to 25% per year"
@@ -40,7 +40,7 @@ Which product are you interested in?
 
 How did you hear about us?
 
-(select an option and enter the answer number in the line)`,
+(click on one of the options below)`,
         options: [
             "1. Friend's recommendation",
             "2. Advertising",

@@ -25,6 +25,11 @@ class WenayBotAssistant {
         // Обработчик всех текстовых сообщений
         this.bot.on('message', (msg) => {
             if (msg.text && !msg.text.startsWith('/')) {
+                // Проверяем, находится ли пользователь в процессе анкетирования
+                if (this.userSessions.has(msg.chat.id)) {
+                    // Игнорируем текстовые сообщения во время анкетирования
+                    return;
+                }
                 this.handleMessage(msg);
             }
         });
@@ -64,11 +69,6 @@ I can:
         const chatId = msg.chat.id;
         const userMessage = msg.text;
         
-        // Проверяем, находится ли пользователь в процессе анкетирования
-        if (this.userSessions.has(chatId)) {
-            await this.handleSurveyResponse(msg);
-            return;
-        }
 
         try {
             // Отправляем индикатор печати
@@ -168,17 +168,6 @@ Guidelines:
         await this.bot.answerCallbackQuery(callbackQuery.id);
     }
 
-    async handleSurveyResponse(msg) {
-        const chatId = msg.chat.id;
-        const answerIndex = parseInt(msg.text);
-
-        if (isNaN(answerIndex) || answerIndex < 1 || answerIndex > 4) {
-            await this.bot.sendMessage(chatId, 'Please select a valid option number (1-4)');
-            return;
-        }
-
-        await this.processSurveyAnswer(chatId, answerIndex);
-    }
 
     async processSurveyAnswer(chatId, answerIndex) {
         const session = this.userSessions.get(chatId);
